@@ -142,6 +142,92 @@ const GlowT = () => (
    INTRO SLIDES
 ══════════════════════════════════════════════ */
 
+function ThankYouYCFSlide() {
+  return (
+    <>
+      <GlowT />
+      <DotGrid />
+      <SectionTag section="intro" />
+      <SlideSec style={{ position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6vw", alignItems: "start" }}>
+        <FI>
+          <Label color="teal">Thank you</Label>
+          <Divider />
+          <H2 style={{ marginTop: "1rem" }}>Youth Code<br />Foundation</H2>
+          <p style={{ marginTop: "1.2rem", fontSize: "clamp(.88rem,1.4vw,1rem)", color: "var(--body)", lineHeight: 1.7, maxWidth: "38ch" }}>
+            Grateful to YCF for organizing this hackathon and for the work they do bringing young people into the tech revolution.
+          </p>
+          <a
+            href="https://www.youthcodefoundation.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "inline-flex", alignItems: "center", gap: ".4rem", marginTop: "1.4rem", color: "var(--teal)", fontSize: ".85rem", fontWeight: 700, textDecoration: "none", letterSpacing: ".02em" }}
+          >
+            youthcodefoundation.org ↗
+          </a>
+        </FI>
+        <FI>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+            <GradientPanel accent="teal">
+              <p style={{ fontSize: ".58rem", textTransform: "uppercase", letterSpacing: ".16em", color: "var(--teal)", fontWeight: 700, marginBottom: ".6rem" }}>Mission</p>
+              <p style={{ fontSize: "clamp(.82rem,1.3vw,.9rem)", color: "var(--body)", lineHeight: 1.7 }}>
+                As kids we are taught alphabets and numbers and we learn to read and write words and then one day stories. Our mission at YCF is to help demystify technology for the youth by exposing them to software development by training about languages, app development and deployment and GenAI.
+              </p>
+            </GradientPanel>
+            <GradientPanel accent="teal">
+              <p style={{ fontSize: ".58rem", textTransform: "uppercase", letterSpacing: ".16em", color: "var(--teal)", fontWeight: 700, marginBottom: ".6rem" }}>Vision</p>
+              <p style={{ fontSize: "clamp(.82rem,1.3vw,.9rem)", color: "var(--body)", lineHeight: 1.7 }}>
+                Coming together is a beginning; keeping together is progress; working together is success. Our vision is to bring and work together with the youth in this tech revolution journey and help create magic with usage of technology.
+              </p>
+            </GradientPanel>
+          </div>
+        </FI>
+      </SlideSec>
+    </>
+  )
+}
+
+function WhatIsMakersLoungeSlide() {
+  const items = [
+    { label: "Who we are", desc: "A community of builders, founders, and tinkerers who ship real things with AI — not just talk about it." },
+    { label: "What we do", desc: "Monthly events, live demos, and hands-on workshops. If you built something, bring it. We want to see it run." },
+    { label: "Who it's for", desc: "Anyone curious enough to start. Students, developers, side-project people — if you like making things, you belong." },
+  ]
+  return (
+    <>
+      <GlowC />
+      <DotGrid />
+      <SectionTag section="intro" />
+      <SlideSec style={{ position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "auto 1fr", gap: "5vw", alignItems: "start" }}>
+        <FI>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2rem" }}>
+            <img
+              src="/makerslounge-logo.png"
+              alt="MakersLounge"
+              style={{ width: "clamp(7rem,12vw,9.5rem)", height: "clamp(7rem,12vw,9.5rem)", borderRadius: 20, boxShadow: "0 0 36px rgba(59,130,246,.35)", display: "block" }}
+            />
+            <a
+              href="https://luma.com/makerslounge"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontSize: ".72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".1em", color: "var(--coral)", textDecoration: "none" }}
+            >
+              luma.com/makerslounge ↗
+            </a>
+          </div>
+        </FI>
+        <FI>
+          <Label color="coral">About</Label>
+          <Divider />
+          <H2 style={{ marginTop: "1rem", marginBottom: "1.8rem" }}>What is<br />MakersLounge?</H2>
+          {items.map(({ label, desc }) => (
+            <FeatureRow key={label} label={label} desc={desc} color="coral" />
+          ))}
+        </FI>
+      </SlideSec>
+    </>
+  )
+}
+
 function CoverSlide() {
   return (
     <>
@@ -227,6 +313,15 @@ function AboutSlide() {
           <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap", marginTop: "1.2rem" }}>
             <Pill color="dim">Young Entrepreneur of the Year 2017</Pill>
             <Pill color="dim">🏈 National Football Champion</Pill>
+          </div>
+          <div style={{ marginTop: "1.4rem" }}>
+            <Label>Background</Label>
+            <Divider />
+            <div style={{ display: "flex", alignItems: "center", gap: "2rem", marginTop: ".8rem", flexWrap: "wrap" }}>
+              <img src="/ivey-logo.png" alt="Ivey Business School" style={{ height: "clamp(2rem,3.5vw,3rem)", objectFit: "contain" }} />
+              <img src="/cibc-logo.png" alt="CIBC" style={{ height: "clamp(2rem,3.5vw,3rem)", objectFit: "contain" }} />
+              <img src="/kpmg-logo.png" alt="KPMG" style={{ height: "clamp(2rem,3.5vw,3rem)", objectFit: "contain" }} />
+            </div>
           </div>
         </FI>
         <FI>
@@ -883,12 +978,70 @@ function OpenQASlide() {
 }
 
 /* ══════════════════════════════════════════════
+   AUDIENCE POLL SLIDE
+══════════════════════════════════════════════ */
+
+const POLL_URL = "https://tally.so/r/XXXXXXX" // ← replace with your Tally / Google Form URL
+
+function AudiencePollSlide() {
+  const questions = [
+    { num: "01", q: "What’s your favourite AI tool right now?" },
+    { num: "02", q: "What do you mostly use AI for?" },
+    { num: "03", q: "Have you ever built something with AI?" },
+    { num: "04", q: "What’s a big challenge you’d love to see solved in the world?" },
+    { num: "05", q: "If you had one week and unlimited AI — what would you build?" },
+  ]
+  return (
+    <>
+      <DotGrid />
+      <SectionTag section="intro" />
+      <div style={{ position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "1fr auto", gap: "6vw", alignItems: "center" }}>
+        <div>
+          <Label>Quick poll — 60 seconds</Label>
+          <Divider />
+          <H2 style={{ marginTop: ".6rem" }}>Let&apos;s hear<br />from you.</H2>
+          <p style={{ marginTop: "1rem", fontSize: "clamp(.88rem,1.4vw,1rem)", color: "var(--body)", lineHeight: 1.7, maxWidth: "40ch" }}>
+            Scan the QR code or visit the link below. Five quick questions — your answers shape how we spend today.
+          </p>
+          <div style={{ marginTop: "1.4rem", display: "flex", flexDirection: "column", gap: ".55rem" }}>
+            {questions.map((item) => (
+              <div key={item.num} style={{ display: "flex", alignItems: "flex-start", gap: ".75rem" }}>
+                <span style={{ fontSize: ".7rem", fontWeight: 700, color: "var(--coral)", letterSpacing: ".08em", minWidth: "1.6rem", paddingTop: ".15rem" }}>{item.num}</span>
+                <span style={{ fontSize: "clamp(.8rem,1.25vw,.95rem)", color: "var(--body)", lineHeight: 1.5 }}>{item.q}</span>
+              </div>
+            ))}
+          </div>
+          <p style={{ marginTop: "1.4rem", fontSize: ".78rem", color: "var(--slate)", letterSpacing: ".04em" }}>
+            {POLL_URL}
+          </p>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+          <div style={{ background: "#ffffff", padding: "clamp(.8rem,1.5vw,1.2rem)", borderRadius: "1rem" }}>
+            <QRCode
+              value={POLL_URL}
+              size={200}
+              bgColor="#ffffff"
+              fgColor="#0a0a0f"
+              style={{ display: "block" }}
+            />
+          </div>
+          <span style={{ fontSize: ".78rem", color: "var(--slate)", letterSpacing: ".06em" }}>SCAN TO ANSWER</span>
+        </div>
+      </div>
+    </>
+  )
+}
+
+/* ══════════════════════════════════════════════
    SLIDES ARRAY
 ══════════════════════════════════════════════ */
 
 export const slides: Slide[] = [
   { section: "intro", component: CoverSlide,          slug: "cover" },
-  { section: "intro", component: AboutSlide,          slug: "about" },
+  { section: "intro", component: ThankYouYCFSlide,       slug: "thank-you-ycf" },
+  { section: "intro", component: WhatIsMakersLoungeSlide, slug: "what-is-makerslounge" },
+  { section: "intro", component: AboutSlide,             slug: "about" },
+  { section: "intro", component: AudiencePollSlide,   slug: "audience-poll" },
   { section: "intro", component: WhyOpenClawSlide,    slug: "why-openclaw" },
   { section: "intro", component: ProblemSlide,        slug: "problem" },
   { section: "intro", component: WhatIsSlide,         slug: "what-is" },
