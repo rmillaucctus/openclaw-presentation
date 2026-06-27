@@ -4,6 +4,7 @@ import { QUESTIONS } from "@/lib/poll-config"
 
 export default function PollPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [q1Other, setQ1Other] = useState("")
   const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle")
 
   const choiceQs = QUESTIONS.filter(q => q.type === "choice")
@@ -12,10 +13,12 @@ export default function PollPage() {
   async function submit() {
     setStatus("submitting")
     try {
+      const payload = { ...answers }
+      if (payload.q1 === "other" && q1Other.trim()) payload.q1 = q1Other.trim()
       const res = await fetch("/api/poll", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(answers),
+        body: JSON.stringify(payload),
       })
       if (!res.ok) throw new Error()
       setStatus("done")
@@ -71,6 +74,17 @@ export default function PollPage() {
                       </button>
                     )
                   })}
+                  {q.id === "q1" && answers.q1 === "other" && (
+                    <input
+                      autoFocus
+                      type="text"
+                      maxLength={60}
+                      placeholder="Which tool? (e.g. Perplexity, Grok…)"
+                      value={q1Other}
+                      onChange={e => setQ1Other(e.target.value)}
+                      style={{ ...s.textarea, marginTop: ".2rem", resize: undefined }}
+                    />
+                  )}
                 </div>
               )}
 
@@ -118,8 +132,6 @@ const s: Record<string, React.CSSProperties> = {
   page: {
     minHeight: "100vh",
     background: "var(--bg)",
-    display: "flex",
-    justifyContent: "center",
     padding: "2rem 1rem 4rem",
   },
   card: {
@@ -129,7 +141,7 @@ const s: Record<string, React.CSSProperties> = {
     padding: "clamp(1.5rem,5vw,2.5rem)",
     width: "100%",
     maxWidth: 520,
-    height: "fit-content",
+    margin: "0 auto",
   },
   tag: {
     fontSize: ".6rem",
