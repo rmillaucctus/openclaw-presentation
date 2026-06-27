@@ -3,8 +3,8 @@ import type { Submission } from "./poll-config"
 const KEY     = "poll:submissions"
 const DEL_KEY = "poll:deleted"
 
-const mem:    string[]  = []
-const memDel: Set<string> = new Set()
+const mem:    Submission[] = []
+const memDel: Set<string>  = new Set()
 
 function useReal() {
   return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
@@ -18,9 +18,10 @@ async function getRedis() {
 export async function pushSubmission(sub: Submission): Promise<void> {
   if (useReal()) {
     const redis = await getRedis()
-    await redis.lpush(KEY, JSON.stringify(sub))
+    // @upstash/redis auto-serializes objects — do NOT JSON.stringify manually
+    await redis.lpush(KEY, sub as unknown as string)
   } else {
-    mem.unshift(JSON.stringify(sub))
+    mem.unshift(sub)
   }
 }
 
@@ -34,23 +35,22 @@ export async function deleteSubmission(id: string): Promise<void> {
 }
 
 export async function allSubmissions(): Promise<Submission[]> {
-  let raw: string[]
+  let rows: Submission[]
   let deleted: Set<string>
 
   if (useReal()) {
     const redis = await getRedis()
-    const [rows, dels] = await Promise.all([
-      redis.lrange(KEY, 0, -1) as Promise<string[]>,
+    const [raw, dels] = await Promise.all([
+      // @upstash/redis already deserializes JSON — cast directly to Submission[]
+      redis.lrange(KEY, 0, -1) as Promise<unknown[]>,
       redis.smembers(DEL_KEY)  as Promise<string[]>,
     ])
-    raw     = rows
+    rows    = raw.map(r => (typeof r === "string" ? JSON.parse(r) : r) as Submission)
     deleted = new Set(dels)
   } else {
-    raw     = [...mem]
+    rows    = [...mem]
     deleted = memDel
   }
 
-  return raw
-    .map(r => JSON.parse(r) as Submission)
-    .filter(s => !deleted.has(s.id))
+  return rows.filter(s => !deleted.has(s.id))
 }
