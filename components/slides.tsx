@@ -120,7 +120,7 @@ function CoverSlide() {
         <p style={{ fontSize: "clamp(1.1rem,2vw,1.5rem)", color: "var(--dim)", marginTop: ".5rem", fontWeight: 500 }}>
           Founder, MakersLounge · AI Builder
         </p>
-        <Lead>Today: how I use OpenClaw in my stack, and how you can build something real with it in the next hour.</Lead>
+        <Lead>I&apos;ve been running OpenClaw in my daily workflow for months. Today I&apos;ll show you exactly how — and help you set one up.</Lead>
         <div style={{ display: "flex", gap: ".6rem", flexWrap: "wrap", marginTop: "1.8rem" }}>
           <Pill color="coral">10 min intro</Pill>
           <Pill color="teal">30 min live demo</Pill>
@@ -179,22 +179,22 @@ function WhyOpenClawSlide() {
       <div style={{ position: "relative", zIndex: 1 }}>
         <Rule />
         <Eyebrow>Why I&apos;m Here</Eyebrow>
-        <H2>I build AI tools<br />for a living.<br /><span style={{ color: "var(--coral)" }}>OpenClaw is in my stack.</span></H2>
+        <H2>I&apos;ve been using this<br />every day for months.<br /><span style={{ color: "var(--coral)" }}>Let me show you my setup.</span></H2>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: ".85rem", marginTop: "1.8rem" }}>
           <Card>
-            <p style={{ fontSize: ".68rem", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--slate)", marginBottom: ".4rem" }}>I use it for</p>
-            <p style={{ color: "var(--bright)", fontSize: ".9rem", fontWeight: 600, marginBottom: ".25rem" }}>Managing projects from Telegram</p>
-            <p style={{ color: "var(--dim)", fontSize: ".82rem" }}>Text my agent from my phone, get task breakdowns and status updates without opening a laptop.</p>
+            <p style={{ fontSize: ".68rem", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--slate)", marginBottom: ".4rem" }}>Daily workflow</p>
+            <p style={{ color: "var(--bright)", fontSize: ".9rem", fontWeight: 600, marginBottom: ".25rem" }}>Project management from my phone</p>
+            <p style={{ color: "var(--dim)", fontSize: ".82rem" }}>I text my agent task lists, blockers, and questions between meetings. It keeps context — no re-explaining every time.</p>
           </Card>
           <Card>
-            <p style={{ fontSize: ".68rem", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--slate)", marginBottom: ".4rem" }}>I use it for</p>
-            <p style={{ color: "var(--bright)", fontSize: ".9rem", fontWeight: 600, marginBottom: ".25rem" }}>Running research agents</p>
-            <p style={{ color: "var(--dim)", fontSize: ".82rem" }}>Trigger deep research from a chat message. Results come back to my phone while I&apos;m doing something else.</p>
+            <p style={{ fontSize: ".68rem", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--slate)", marginBottom: ".4rem" }}>Daily workflow</p>
+            <p style={{ color: "var(--bright)", fontSize: ".9rem", fontWeight: 600, marginBottom: ".25rem" }}>Research while I&apos;m away from my desk</p>
+            <p style={{ color: "var(--dim)", fontSize: ".82rem" }}>Send a topic, come back in 20 minutes to a full briefing on my phone. No browser tab needed.</p>
           </Card>
           <Card accent="var(--coral)">
             <p style={{ fontSize: ".68rem", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--slate)", marginBottom: ".4rem" }}>Why self-hosted</p>
             <p style={{ color: "var(--bright)", fontSize: ".9rem", fontWeight: 600, marginBottom: ".25rem" }}>My data. My rules.</p>
-            <p style={{ color: "var(--dim)", fontSize: ".82rem" }}>Nothing goes to a third-party server. Open source, MIT licensed — I can read every line of code.</p>
+            <p style={{ color: "var(--dim)", fontSize: ".82rem" }}>Runs on this laptop. Nothing goes to a third-party server. I can read every line of the code.</p>
           </Card>
         </div>
       </div>
@@ -370,9 +370,9 @@ function DemoIntroSlide() {
       <SectionTag section="demo" />
       <div style={{ position: "relative", zIndex: 1 }}>
         <Eyebrow color="teal">Live Demo · 30 min</Eyebrow>
-        <H2>We&apos;re building a<br />Hackathon Project<br />Assistant.</H2>
-        <Lead>Text your AI agent from Telegram with a project idea. It breaks it into tasks, answers coding questions, and tracks your progress — all from your phone.</Lead>
-        <p style={{ marginTop: "1.5rem", fontSize: ".88rem", color: "var(--dim)" }}>Follow along on your own laptop. Install: <span style={{ color: "var(--teal)", fontFamily: "var(--font-mono), ui-monospace, monospace" }}>openclaw.ai</span></p>
+        <H2>This is my actual<br />setup — running<br />right now.</H2>
+        <Lead>I&apos;ve been texting this agent from my phone every day for months. I&apos;ll show you what I actually use it for, then help you get your own running.</Lead>
+        <p style={{ marginTop: "1.5rem", fontSize: ".88rem", color: "var(--dim)" }}>Follow along on your laptop. Install: <span style={{ color: "var(--teal)", fontFamily: "var(--font-mono), ui-monospace, monospace" }}>openclaw.ai</span></p>
       </div>
     </>
   )
@@ -386,18 +386,18 @@ function Step1Slide() {
       <div style={{ position: "relative", zIndex: 1 }}>
         <Rule color="teal" />
         <Eyebrow color="teal">Step 1 of 5</Eyebrow>
-        <H2>Open the dashboard.</H2>
+        <H2>My dashboard —<br />already running.</H2>
         <div style={{ marginTop: "1.5rem", maxWidth: "42rem" }}>
           <Cmd>openclaw dashboard</Cmd>
         </div>
         <div style={{ display: "flex", alignItems: "flex-start", gap: "1.2rem", background: "var(--surface)", border: "1px solid var(--rim)", borderLeft: "3px solid var(--teal)", borderRadius: 8, padding: "1rem 1.2rem", marginTop: "1.5rem", maxWidth: "44rem" }}>
           <div style={{ fontFamily: "var(--font-mono), ui-monospace, monospace", fontSize: "1.8rem", fontWeight: 700, color: "var(--teal)", lineHeight: 1, flexShrink: 0, opacity: .35 }}>01</div>
           <div>
-            <p style={{ color: "var(--bright)", fontWeight: 700, fontSize: "clamp(.9rem,1.4vw,1.05rem)", marginBottom: ".2rem" }}>Browser opens at http://127.0.0.1:18789/</p>
-            <p style={{ color: "var(--dim)", fontSize: ".83rem", maxWidth: "none" }}>This is the Control UI — a full chat interface running locally. Send a message now to verify your Gemini connection is working.</p>
+            <p style={{ color: "var(--bright)", fontWeight: 700, fontSize: "clamp(.9rem,1.4vw,1.05rem)", marginBottom: ".2rem" }}>http://127.0.0.1:18789/ — always on</p>
+            <p style={{ color: "var(--dim)", fontSize: ".83rem", maxWidth: "none" }}>The gateway runs as a background service on my laptop — it starts automatically on login. This isn&apos;t a demo environment. This is the same setup I use daily.</p>
           </div>
         </div>
-        <p style={{ marginTop: "1.3rem", fontSize: ".85rem", color: "var(--dim)", fontStyle: "italic" }}>&ldquo;What can you help me build at a hackathon?&rdquo;</p>
+        <p style={{ marginTop: "1.3rem", fontSize: ".85rem", color: "var(--dim)", fontStyle: "italic" }}>Try it now: send a message and watch it reply.</p>
       </div>
     </>
   )
@@ -412,24 +412,24 @@ function Step2Slide() {
       <div style={{ position: "relative", zIndex: 1 }}>
         <Rule color="teal" />
         <Eyebrow color="teal">Step 2 of 5</Eyebrow>
-        <H2>Connect Telegram.<br />Chat from your phone.</H2>
+        <H2>Telegram — how<br />I connected mine.</H2>
         <div style={{ display: "flex", flexDirection: "column", gap: ".75rem", marginTop: "1.5rem", maxWidth: "44rem" }}>
           {[
             { n: 1, text: <>Open Telegram → search <strong style={{ color: "var(--bright)" }}>@BotFather</strong> → send <code style={{ color: "var(--teal)", fontFamily: "var(--font-mono), ui-monospace, monospace" }}>/newbot</code></> },
-            { n: 2, text: <>Give it a name and username → BotFather gives you a <strong style={{ color: "var(--bright)" }}>bot token</strong></> },
+            { n: 2, text: <>Give it a name and username → BotFather replies with your <strong style={{ color: "var(--bright)" }}>bot token</strong></> },
             { n: 3, isCmd: true },
-            { n: 4, text: <>Paste your bot token when prompted → find your bot in Telegram → send it a message</> },
+            { n: 4, text: <>Paste the token → find your bot in Telegram → send it anything</> },
           ].map(step => (
             <div key={step.n} style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
               <StepNum n={step.n} color="teal" />
               {step.isCmd
-                ? <Cmd>openclaw configure <Teal>--section telegram</Teal></Cmd>
+                ? <Cmd>openclaw channels add <Teal>--channel telegram</Teal></Cmd>
                 : <p style={{ color: "var(--body)", fontSize: "clamp(.85rem,1.35vw,1rem)", lineHeight: 1.55 }}>{step.text}</p>
               }
             </div>
           ))}
         </div>
-        <p style={{ marginTop: "1.3rem", fontSize: ".84rem", color: "var(--slate)" }}>Telegram is the fastest channel — just a bot token, no app install, works on any phone.</p>
+        <p style={{ marginTop: "1.3rem", fontSize: ".84rem", color: "var(--slate)" }}>Takes 3 minutes. Mine has been connected for months — I&apos;ll text it live right now.</p>
       </div>
     </>
   )
@@ -443,19 +443,19 @@ function Step3Slide() {
       <div style={{ position: "relative", zIndex: 1 }}>
         <Rule color="teal" />
         <Eyebrow color="teal">Step 3 of 5</Eyebrow>
-        <H2>Text it your<br />project idea.</H2>
-        <div style={{ background: "var(--surface)", border: "1px solid var(--teal)", borderRadius: 10, padding: "1.2rem 1.5rem", marginTop: "1.5rem", maxWidth: "50rem" }}>
-          <p style={{ fontSize: ".8rem", color: "var(--slate)", marginBottom: ".5rem", fontFamily: "var(--font-mono), ui-monospace, monospace", textTransform: "uppercase", letterSpacing: ".08em" }}>You → Telegram</p>
-          <p style={{ fontSize: "clamp(.95rem,1.6vw,1.1rem)", color: "var(--bright)", lineHeight: 1.6 }}>
-            &ldquo;I want to build a web app that lets students anonymously submit questions during a class, and the teacher sees them in real time. I have 24 hours. Break this into tasks.&rdquo;
-          </p>
-        </div>
-        <div style={{ display: "flex", alignItems: "flex-start", gap: "1.2rem", background: "var(--surface)", border: "1px solid var(--rim)", borderLeft: "3px solid var(--teal)", borderRadius: 8, padding: "1rem 1.2rem", marginTop: "1.2rem", maxWidth: "50rem" }}>
-          <div style={{ fontFamily: "var(--font-mono), ui-monospace, monospace", fontSize: "1.8rem", fontWeight: 700, color: "var(--teal)", lineHeight: 1, flexShrink: 0, opacity: .35 }}>→</div>
-          <div>
-            <p style={{ color: "var(--bright)", fontWeight: 700, fontSize: "clamp(.9rem,1.4vw,1.05rem)", marginBottom: ".2rem" }}>Watch it reply to your phone</p>
-            <p style={{ color: "var(--dim)", fontSize: ".83rem", maxWidth: "none" }}>The agent breaks the project into a prioritised task list, flags the hardest parts, and suggests where to start. No tab switching — it comes to you.</p>
-          </div>
+        <H2>What I actually<br />text it.</H2>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: ".75rem", marginTop: "1.5rem" }}>
+          {[
+            { label: "Morning check-in", msg: "What's my priority list today? I've got MakersLounge prep, a VC call at 2pm, and need to unblock the auth bug." },
+            { label: "Coding help", msg: "My Supabase RLS policy is blocking reads for authenticated users. Here's the policy: [paste]. What's wrong?" },
+            { label: "Research", msg: "Give me a quick briefing on how Cursor monetises their AI editor. Key numbers if you can find them." },
+            { label: "Writing", msg: "Draft a cold DM to a founder I want to collaborate with. Context: [two sentences]. Keep it under 5 lines." },
+          ].map(({ label, msg }) => (
+            <div key={label} style={{ background: "var(--surface)", border: "1px solid var(--rim)", borderRadius: 10, padding: "1rem 1.1rem" }}>
+              <p style={{ fontSize: ".62rem", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--teal)", marginBottom: ".4rem", fontWeight: 700 }}>{label}</p>
+              <p style={{ fontSize: ".83rem", color: "var(--body)", lineHeight: 1.55 }}>&ldquo;{msg}&rdquo;</p>
+            </div>
+          ))}
         </div>
       </div>
     </>
@@ -463,11 +463,6 @@ function Step3Slide() {
 }
 
 function Step4Slide() {
-  const examples = [
-    '"How do I set up real-time with WebSockets in Node.js? Show me the server code."',
-    '"My Express server keeps crashing on POST requests, here\'s the error: [paste error]"',
-    '"We finished the backend. What should we tackle next based on our task list?"',
-  ]
   return (
     <>
       <GlowT />
@@ -475,16 +470,26 @@ function Step4Slide() {
       <SectionTag section="demo" />
       <div style={{ position: "relative", zIndex: 1 }}>
         <Rule color="teal" />
-        <Eyebrow color="teal">Step 4 of 5</Eyebrow>
-        <H2>Ask it coding<br />questions mid-build.</H2>
-        <div style={{ display: "flex", flexDirection: "column", gap: ".7rem", marginTop: "1.5rem", maxWidth: "50rem" }}>
-          {examples.map(ex => (
-            <Card key={ex}>
-              <p style={{ fontSize: ".88rem", color: "var(--body)", lineHeight: 1.55, maxWidth: "none" }}>{ex}</p>
-            </Card>
-          ))}
+        <Eyebrow color="teal">Step 4 of 5 · Live</Eyebrow>
+        <H2>Texting it right now<br />from my phone.</H2>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginTop: "1.8rem", alignItems: "start" }}>
+          <div>
+            <p style={{ fontSize: ".7rem", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--teal)", fontWeight: 700, marginBottom: ".8rem" }}>I&apos;m sending something real</p>
+            <div style={{ background: "var(--surface)", border: "1px solid var(--teal)", borderRadius: 10, padding: "1.2rem 1.4rem" }}>
+              <p style={{ fontSize: ".8rem", color: "var(--slate)", marginBottom: ".5rem", fontFamily: "var(--font-mono), ui-monospace, monospace", textTransform: "uppercase", letterSpacing: ".08em" }}>Robert → Telegram</p>
+              <p style={{ fontSize: "clamp(.9rem,1.5vw,1.05rem)", color: "var(--bright)", lineHeight: 1.65, fontStyle: "italic" }}>
+                &ldquo;I&apos;m presenting OpenClaw to a group of high school hackers right now. Give me three sharp one-liners that explain why self-hosting an AI agent beats using a chat UI.&rdquo;
+              </p>
+            </div>
+          </div>
+          <div>
+            <p style={{ fontSize: ".7rem", textTransform: "uppercase", letterSpacing: ".1em", color: "var(--dim)", fontWeight: 700, marginBottom: ".8rem" }}>Watch the reply land</p>
+            <div style={{ background: "var(--surface)", border: "1px solid var(--rim)", borderRadius: 10, padding: "1.2rem 1.4rem", minHeight: "8rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <p style={{ color: "var(--slate)", fontSize: ".88rem", fontStyle: "italic", textAlign: "center" }}>reply appears here — live ↗</p>
+            </div>
+            <p style={{ marginTop: ".75rem", fontSize: ".8rem", color: "var(--dim)" }}>Session memory keeps context across every message — no re-explaining who you are.</p>
+          </div>
         </div>
-        <p style={{ marginTop: "1.3rem", fontSize: ".85rem", color: "var(--dim)" }}>The agent has session memory — it remembers your project from step 3. You don&apos;t re-explain context on every message.</p>
       </div>
     </>
   )
@@ -500,7 +505,7 @@ function QABreak2() {
         <Rule color="amber" />
         <Eyebrow color="amber">Q&amp;A Break · 3 min</Eyebrow>
         <H2 style={{ color: "var(--amber)" }}>Try it yourself.</H2>
-        <Lead>Text your own project idea to the agent. What does it say?</Lead>
+        <Lead>Text it something you&apos;re actually working on right now. Not a demo prompt — something real.</Lead>
         <p style={{ marginTop: "1.5rem", fontSize: ".88rem", color: "var(--slate)" }}>Still setting up? <span style={{ color: "var(--teal)", fontFamily: "var(--font-mono), ui-monospace, monospace" }}>openclaw.ai</span> for install · <span style={{ color: "var(--teal)", fontFamily: "var(--font-mono), ui-monospace, monospace" }}>@BotFather</span> for Telegram</p>
       </div>
     </>
@@ -628,7 +633,7 @@ function GoBuildSlide() {
       <div style={{ position: "relative", zIndex: 1 }}>
         <div style={{ fontSize: "3.2rem", lineHeight: 1, filter: "drop-shadow(0 0 18px rgba(255,74,82,.45))", marginBottom: "1.3rem" }}>🦞</div>
         <Eyebrow>Go Build</Eyebrow>
-        <H2>Install. Connect.<br />Ship something today.</H2>
+        <H2>Same setup I use.<br />Yours in 5 minutes.</H2>
         <Cmd>curl -fsSL https://openclaw.ai/install.sh | bash</Cmd>
         <div style={{ display: "flex", gap: "3rem", marginTop: "2.2rem", flexWrap: "wrap" }}>
           {links.map(l => (
