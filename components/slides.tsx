@@ -594,6 +594,120 @@ function WhatIsSlide() {
   )
 }
 
+function VsSlide() {
+  const cols = [
+    {
+      label: "ChatGPT / Claude.ai",
+      color: "dim",
+      icon: "🌐",
+      rows: [
+        { good: false, text: "Open a browser tab every time" },
+        { good: false, text: "Context resets each session" },
+        { good: false, text: "Your data goes to their servers" },
+        { good: false, text: "No real system access or actions" },
+        { good: false, text: "Stuck on their one model" },
+      ],
+    },
+    {
+      label: "Claude Code",
+      color: "dim",
+      icon: "💻",
+      rows: [
+        { good: false, text: "Terminal only — laptop required" },
+        { good: false, text: "No phone or mobile support" },
+        { good: false, text: "Anthropic only — no model choice" },
+        { good: true,  text: "Persistent session in one project" },
+        { good: false, text: "Can't reach you away from desk" },
+      ],
+    },
+    {
+      label: "OpenClaw",
+      color: "teal",
+      icon: "🦞",
+      rows: [
+        { good: true, text: "Telegram, WhatsApp — where you already are" },
+        { good: true, text: "Memory persists across every message" },
+        { good: true, text: "Self-hosted — your data, your machine" },
+        { good: true, text: "Runs code, browses web, controls apps" },
+        { good: true, text: "35+ providers incl. free Ollama" },
+      ],
+    },
+  ]
+
+  return (
+    <>
+      <GlowT />
+      <DotGrid />
+      <SectionTag section="intro" />
+      <SlideSec style={{ position: "relative", zIndex: 1 }}>
+        <FI>
+          <Label color="teal">Why OpenClaw?</Label>
+          <Divider />
+          <H2 style={{ marginTop: "1rem", marginBottom: "1.6rem" }}>
+            Not another chat UI.
+          </H2>
+        </FI>
+        <FI>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem" }}>
+            {cols.map(col => (
+              <div
+                key={col.label}
+                style={{
+                  background: col.color === "teal" ? "rgba(0,212,190,.07)" : "var(--surface)",
+                  border: `1px solid ${col.color === "teal" ? "rgba(0,212,190,.35)" : "var(--rim)"}`,
+                  borderRadius: 12,
+                  padding: "1.2rem 1.3rem",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                {col.color === "teal" && (
+                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "var(--teal)" }} />
+                )}
+                <p style={{ fontSize: "1.4rem", marginBottom: ".45rem" }}>{col.icon}</p>
+                <p style={{
+                  fontSize: ".6rem", fontWeight: 700, textTransform: "uppercase",
+                  letterSpacing: ".14em", marginBottom: "1rem",
+                  color: col.color === "teal" ? "var(--teal)" : "var(--slate)",
+                }}>
+                  {col.label}
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
+                  {col.rows.map((row, i) => (
+                    <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: ".5rem" }}>
+                      <span style={{
+                        fontSize: ".7rem", flexShrink: 0, paddingTop: ".1rem",
+                        color: row.good ? "var(--teal)" : "var(--slate)",
+                      }}>
+                        {row.good ? "✓" : "✗"}
+                      </span>
+                      <p style={{
+                        fontSize: "clamp(.75rem,1.15vw,.85rem)",
+                        color: row.good ? "var(--body)" : "var(--slate)",
+                        lineHeight: 1.5,
+                      }}>
+                        {row.text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </FI>
+        <FI>
+          <div style={{ marginTop: "1.2rem" }}>
+            <Divider />
+            <p style={{ marginTop: ".7rem", fontSize: ".82rem", color: "var(--teal)", fontWeight: 600 }}>
+              OpenClaw is the bridge that puts a full coding agent inside the apps you already use — with your rules, on your machine.
+            </p>
+          </div>
+        </FI>
+      </SlideSec>
+    </>
+  )
+}
+
 function InstallSlide() {
   const steps = [
     { n: 1, cmd: <span>curl -fsSL https://openclaw.ai/install.sh | bash</span> },
@@ -1201,6 +1315,7 @@ export const slides: Slide[] = [
   { section: "intro", component: WhyOpenClawSlide,    slug: "why-openclaw" },
   { section: "intro", component: ProblemSlide,        slug: "problem" },
   { section: "intro", component: WhatIsSlide,         slug: "what-is" },
+  { section: "intro", component: VsSlide,             slug: "vs-chatgpt" },
   { section: "intro", component: InstallSlide,        slug: "install" },
   { section: "intro", component: ShowcaseSlide,       slug: "showcase" },
   { section: "intro", component: QABreak1,            slug: "qa-break-1" },
