@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
+import { AnimatePresence, motion } from "motion/react"
 import { slides, type Section } from "./slides"
 
 const SECTION_META: Record<Section, { label: string; color: string }> = {
@@ -15,15 +16,34 @@ const DOT_COLOR: Record<Section, string> = {
   qa:    "var(--amber)",
 }
 
+const slideVariants = {
+  enter: (dir: "right" | "left") => ({
+    x: dir === "right" ? "3vw" : "-3vw",
+    opacity: 0,
+    filter: "blur(10px)",
+    scale: 0.97,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    filter: "blur(0px)",
+    scale: 1,
+  },
+  exit: (dir: "right" | "left") => ({
+    x: dir === "right" ? "-3vw" : "3vw",
+    opacity: 0,
+    filter: "blur(8px)",
+    scale: 0.98,
+  }),
+}
+
 export default function Deck() {
   const [cur, setCur] = useState(0)
   const [dir, setDir] = useState<"right" | "left">("right")
-  const slideKey = useRef(0)
 
   const go = useCallback((n: number) => {
     if (n < 0 || n >= slides.length || n === cur) return
     setDir(n > cur ? "right" : "left")
-    slideKey.current += 1
     setCur(n)
   }, [cur])
 
@@ -36,7 +56,6 @@ export default function Deck() {
     return () => window.removeEventListener("keydown", handler)
   }, [cur, go])
 
-  // Touch swipe
   const touchX = useRef(0)
   const onTouchStart = (e: React.TouchEvent) => { touchX.current = e.touches[0].clientX }
   const onTouchEnd   = (e: React.TouchEvent) => {
@@ -76,14 +95,21 @@ export default function Deck() {
         {meta.label}
       </div>
 
-      {/* Current slide */}
-      <div
-        key={slideKey.current}
-        className={dir === "right" ? "enter-right" : "enter-left"}
-        style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", padding: "7vh 9vw" }}
-      >
-        <CurrentSlide />
-      </div>
+      {/* Current slide — AnimatePresence for proper enter + exit */}
+      <AnimatePresence mode="wait" custom={dir}>
+        <motion.div
+          key={cur}
+          custom={dir}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+          style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", padding: "7vh 9vw" }}
+        >
+          <CurrentSlide />
+        </motion.div>
+      </AnimatePresence>
 
       {/* Prev/Next arrows */}
       {cur > 0 && (

@@ -1,9 +1,10 @@
 "use client"
 import { useState } from "react"
+import QRCode from "react-qr-code"
 import { DotGrid, CoverGlow, Aurora, BeamsBg } from "./ui/effects"
 
 export type Section = "intro" | "demo" | "qa"
-export interface Slide { section: Section; component: React.FC }
+export interface Slide { section: Section; component: React.FC; slug: string }
 
 /* ─────────────────────────────────────────────
    DESIGN TOKENS (inline-style only — no Tailwind)
@@ -144,12 +145,29 @@ function CoverSlide() {
             <Pill color="amber">20 min Q&amp;A</Pill>
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.2rem" }}>
-          <div style={{ fontSize: "5rem", lineHeight: 1, filter: "drop-shadow(0 0 28px rgba(255,74,82,.55))" }}>🦞</div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+          <img
+            src="/Robert-Headshot.png"
+            alt="Robert Mill"
+            style={{ width: "clamp(8rem,13vw,11rem)", height: "clamp(8rem,13vw,11rem)", borderRadius: "50%", objectFit: "cover", border: "2px solid var(--coral)", boxShadow: "0 0 32px rgba(255,74,82,.28)" }}
+          />
           <div style={{ display: "flex", flexDirection: "column", gap: ".4rem", alignItems: "center" }}>
             <Pill color="dim">Ivey Business School</Pill>
             <Pill color="dim">🏈 National Champion</Pill>
           </div>
+          <a
+            href="https://luma.com/makerslounge"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: ".5rem", textDecoration: "none", marginTop: ".4rem" }}
+          >
+            <div style={{ background: "#fff", padding: "8px", borderRadius: 8, display: "inline-block" }}>
+              <QRCode value="https://luma.com/makerslounge" size={88} />
+            </div>
+            <p style={{ fontSize: ".58rem", textTransform: "uppercase", letterSpacing: ".14em", color: "var(--slate)", fontWeight: 700 }}>
+              MakersLounge
+            </p>
+          </a>
         </div>
       </div>
     </>
@@ -170,9 +188,18 @@ function AboutSlide() {
       <SectionTag section="intro" />
       <div style={{ position: "relative", zIndex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6vw", alignItems: "start" }}>
         <div>
-          <Label>Who I am</Label>
-          <Divider />
-          <H2 style={{ marginTop: "1rem" }}>Builder. Founder.<br />AI tinkerer.</H2>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1rem" }}>
+            <img
+              src="/Robert-Headshot.png"
+              alt="Robert Mill"
+              style={{ width: "clamp(3.2rem,5.5vw,4.5rem)", height: "clamp(3.2rem,5.5vw,4.5rem)", borderRadius: "50%", objectFit: "cover", border: "2px solid var(--coral)", flexShrink: 0 }}
+            />
+            <div>
+              <Label>Who I am</Label>
+              <Divider />
+            </div>
+          </div>
+          <H2>Builder. Founder.<br />AI tinkerer.</H2>
           <p style={{ marginTop: "1.1rem", fontSize: "clamp(.88rem,1.4vw,1rem)", color: "var(--body)", lineHeight: 1.7, maxWidth: "38ch" }}>
             I run <strong style={{ color: "var(--bright)" }}>MakersLounge</strong> — a community for people who build things. Studying at <strong style={{ color: "var(--bright)" }}>Ivey Business School</strong> (Dean&apos;s List). Spent the last few years building AI tools that get used.
           </p>
@@ -770,24 +797,24 @@ function OpenQASlide() {
 ══════════════════════════════════════════════ */
 
 export const slides: Slide[] = [
-  { section: "intro", component: CoverSlide },
-  { section: "intro", component: AboutSlide },
-  { section: "intro", component: WhyOpenClawSlide },
-  { section: "intro", component: ProblemSlide },
-  { section: "intro", component: WhatIsSlide },
-  { section: "intro", component: InstallSlide },
-  { section: "intro", component: ShowcaseSlide },
-  { section: "intro", component: QABreak1 },
-  { section: "demo",  component: DemoIntroSlide },
-  { section: "demo",  component: Step1Slide },
-  { section: "demo",  component: Step2Slide },
-  { section: "demo",  component: Step3Slide },
-  { section: "demo",  component: Step4Slide },
-  { section: "demo",  component: QABreak2 },
-  { section: "demo",  component: Step5Slide },
-  { section: "demo",  component: BuildingBlocksSlide },
-  { section: "demo",  component: QABreak3 },
-  { section: "qa",    component: IdeasSlide },
-  { section: "qa",    component: GoBuildSlide },
-  { section: "qa",    component: OpenQASlide },
+  { section: "intro", component: CoverSlide,        slug: "cover" },
+  { section: "intro", component: AboutSlide,        slug: "about" },
+  { section: "intro", component: WhyOpenClawSlide,  slug: "why-openclaw" },
+  { section: "intro", component: ProblemSlide,      slug: "problem" },
+  { section: "intro", component: WhatIsSlide,       slug: "what-is" },
+  { section: "intro", component: InstallSlide,      slug: "install" },
+  { section: "intro", component: ShowcaseSlide,     slug: "showcase" },
+  { section: "intro", component: QABreak1,          slug: "qa-break-1" },
+  { section: "demo",  component: DemoIntroSlide,    slug: "demo-intro" },
+  { section: "demo",  component: Step1Slide,        slug: "step-1-dashboard" },
+  { section: "demo",  component: Step2Slide,        slug: "step-2-telegram" },
+  { section: "demo",  component: Step3Slide,        slug: "step-3-messages" },
+  { section: "demo",  component: Step4Slide,        slug: "step-4-live" },
+  { section: "demo",  component: QABreak2,          slug: "qa-break-2" },
+  { section: "demo",  component: Step5Slide,        slug: "step-5-skills" },
+  { section: "demo",  component: BuildingBlocksSlide, slug: "building-blocks" },
+  { section: "demo",  component: QABreak3,          slug: "qa-break-3" },
+  { section: "qa",    component: IdeasSlide,        slug: "ideas" },
+  { section: "qa",    component: GoBuildSlide,      slug: "go-build" },
+  { section: "qa",    component: OpenQASlide,       slug: "open-qa" },
 ]

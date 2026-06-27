@@ -10,7 +10,7 @@ export function DotGrid() {
         position: "absolute",
         inset: 0,
         pointerEvents: "none",
-        backgroundImage: "radial-gradient(circle, rgba(168,179,204,0.065) 1px, transparent 1px)",
+        backgroundImage: "radial-gradient(circle, rgba(14,25,60,0.09) 1px, transparent 1px)",
         backgroundSize: "30px 30px",
         maskImage: "radial-gradient(ellipse 92% 88% at 50% 50%, black 25%, transparent 100%)",
         WebkitMaskImage: "radial-gradient(ellipse 92% 88% at 50% 50%, black 25%, transparent 100%)",
@@ -35,7 +35,7 @@ export function CoverGlow() {
         width: "70%",
         height: "80%",
         background:
-          "radial-gradient(ellipse at 60% 28%, rgba(255,74,82,0.2) 0%, rgba(255,74,82,0.06) 45%, transparent 72%)",
+          "radial-gradient(ellipse at 60% 28%, rgba(232,54,62,0.14) 0%, rgba(232,54,62,0.05) 45%, transparent 72%)",
         pointerEvents: "none",
         filter: "blur(1px)",
         zIndex: 0,
