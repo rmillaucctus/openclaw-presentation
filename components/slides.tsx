@@ -253,22 +253,38 @@ function CoverSlide() {
         <FI>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
             <img
+              src="/open-claw-icon.png"
+              alt="OpenClaw"
+              style={{ width: "clamp(5rem,9vw,7.5rem)", height: "clamp(5rem,9vw,7.5rem)", borderRadius: 18, objectFit: "contain", boxShadow: "0 0 36px rgba(255,74,82,.32)" }}
+            />
+            <img
               src="/Robert-Headshot.png"
               alt="Robert Mill"
-              style={{ width: "clamp(8rem,13vw,11rem)", height: "clamp(8rem,13vw,11rem)", borderRadius: "50%", objectFit: "cover", border: "2px solid var(--coral)", boxShadow: "0 0 32px rgba(255,74,82,.28)" }}
+              style={{ width: "clamp(6rem,10vw,8.5rem)", height: "clamp(6rem,10vw,8.5rem)", borderRadius: "50%", objectFit: "cover", border: "2px solid var(--coral)", boxShadow: "0 0 32px rgba(255,74,82,.28)" }}
             />
             <div style={{ display: "flex", flexDirection: "column", gap: ".4rem", alignItems: "center" }}>
               <Pill color="dim">Ivey Business School</Pill>
               <Pill color="dim">🏈 National Champion</Pill>
             </div>
             <a
+              href="https://www.linkedin.com/in/bertomill"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: ".45rem", textDecoration: "none", color: "#0a66c2", fontWeight: 700, fontSize: ".75rem" }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#0a66c2" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              linkedin.com/in/bertomill
+            </a>
+            <a
               href="https://luma.com/makerslounge"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: ".5rem", textDecoration: "none", marginTop: ".4rem" }}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: ".5rem", textDecoration: "none", marginTop: ".2rem" }}
             >
               <div style={{ background: "#fff", padding: "8px", borderRadius: 8, display: "inline-block" }}>
-                <QRCode value="https://luma.com/makerslounge" size={88} />
+                <QRCode value="https://luma.com/makerslounge" size={80} />
               </div>
               <p style={{ fontSize: ".58rem", textTransform: "uppercase", letterSpacing: ".14em", color: "var(--slate)", fontWeight: 700 }}>
                 MakersLounge
