@@ -9,10 +9,15 @@ function useReal() {
   return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
 }
 
+async function getRedis() {
+  const { Redis } = await import("@upstash/redis")
+  return Redis.fromEnv()
+}
+
 export async function pushSubmission(sub: Submission): Promise<void> {
   if (useReal()) {
-    const { kv } = await import("@vercel/kv")
-    await kv.lpush(KEY, JSON.stringify(sub))
+    const redis = await getRedis()
+    await redis.lpush(KEY, JSON.stringify(sub))
   } else {
     mem.unshift(JSON.stringify(sub))
   }
@@ -21,8 +26,8 @@ export async function pushSubmission(sub: Submission): Promise<void> {
 export async function allSubmissions(): Promise<Submission[]> {
   let raw: string[]
   if (useReal()) {
-    const { kv } = await import("@vercel/kv")
-    raw = (await kv.lrange(KEY, 0, -1)) as string[]
+    const redis = await getRedis()
+    raw = (await redis.lrange(KEY, 0, -1)) as string[]
   } else {
     raw = [...mem]
   }
