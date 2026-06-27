@@ -207,6 +207,14 @@ function AboutSlide() {
             <Pill color="dim">Young Entrepreneur of the Year 2017</Pill>
             <Pill color="dim">🏈 National Football Champion</Pill>
           </div>
+          <div style={{ marginTop: "1.4rem" }}>
+            <Label>Experience</Label>
+            <Divider />
+            <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginTop: ".8rem" }}>
+              <img src="/cibc-logo.png" alt="CIBC" style={{ height: "clamp(2.5rem,4vw,3.5rem)", objectFit: "contain" }} />
+              <img src="/kpmg-logo.png" alt="KPMG" style={{ height: "clamp(2.5rem,4vw,3.5rem)", objectFit: "contain" }} />
+            </div>
+          </div>
         </div>
         <div>
           <Label>Things I&apos;ve shipped with AI</Label>
