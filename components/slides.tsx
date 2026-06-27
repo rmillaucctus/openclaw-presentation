@@ -142,6 +142,88 @@ const GlowT = () => (
    INTRO SLIDES
 ══════════════════════════════════════════════ */
 
+function TableOfContentsSlide() {
+  const sections = [
+    {
+      color: "coral",
+      num: "01",
+      title: "Intro",
+      time: "10 min",
+      slug: "thank-you-ycf",
+      topics: ["Who we are", "The problem with AI today", "What is OpenClaw?", "Install in 3 commands", "Community showcase"],
+    },
+    {
+      color: "teal",
+      num: "02",
+      title: "Live Demo",
+      time: "30 min",
+      slug: "demo-intro",
+      topics: ["Open the dashboard", "Connect Telegram", "Text the agent live", "Build a Hackathon tracker", "Install a ClawHub skill"],
+    },
+    {
+      color: "amber",
+      num: "03",
+      title: "Q&A",
+      time: "20 min",
+      slug: "ideas",
+      topics: ["Project ideas to steal", "Open floor — ask anything", "Resources to keep going"],
+    },
+  ]
+
+  const nav = (slug: string) => {
+    if (typeof window !== "undefined") window.location.hash = slug
+  }
+
+  return (
+    <>
+      <DotGrid />
+      <SectionTag section="intro" />
+      <SlideSec style={{ position: "relative", zIndex: 1 }}>
+        <FI>
+          <Label>Today</Label>
+          <Divider />
+        </FI>
+        <FI>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1.5rem", marginTop: "1.2rem" }}>
+            {sections.map(s => (
+              <div
+                key={s.num}
+                onClick={() => nav(s.slug)}
+                className="card-hover"
+                style={{
+                  background: "var(--surface)",
+                  border: `1px solid rgba(${s.color === "coral" ? "255,74,82" : s.color === "teal" ? "0,212,190" : "245,166,35"},.25)`,
+                  borderRadius: 14,
+                  padding: "1.4rem 1.5rem",
+                  cursor: "pointer",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `var(--${s.color})` }} />
+                <p style={{ fontSize: ".58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".18em", color: `var(--${s.color})`, marginBottom: ".5rem" }}>
+                  {s.num} · {s.time}
+                </p>
+                <p style={{ fontSize: "clamp(1.3rem,2.5vw,1.9rem)", fontWeight: 800, letterSpacing: "-.03em", color: "var(--bright)", marginBottom: "1rem", lineHeight: 1.1 }}>
+                  {s.title}
+                </p>
+                <Divider />
+                <div style={{ marginTop: ".8rem", display: "flex", flexDirection: "column", gap: ".45rem" }}>
+                  {s.topics.map(t => (
+                    <p key={t} style={{ fontSize: ".8rem", color: "var(--dim)", lineHeight: 1.5, display: "flex", alignItems: "flex-start", gap: ".4rem" }}>
+                      <span style={{ color: `var(--${s.color})`, flexShrink: 0 }}>·</span> {t}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </FI>
+      </SlideSec>
+    </>
+  )
+}
+
 function ThankYouYCFSlide() {
   return (
     <>
@@ -997,10 +1079,13 @@ function OpenQASlide() {
    AUDIENCE POLL SLIDE
 ══════════════════════════════════════════════ */
 
-const POLL_URL = "https://tally.so/r/XXXXXXX"     // ← replace with your Tally / Google Form URL
-const RESULTS_URL = "https://tally.so/r/XXXXXXX"  // ← replace with your Tally results / share URL
+const POLL_URL = "/poll"
+const RESULTS_URL = "/poll/results"
 
 function AudiencePollSlide() {
+  const origin = typeof window !== "undefined" ? window.location.origin : ""
+  const absUrl = origin + POLL_URL
+
   const questions = [
     { num: "01", q: "What’s your favourite AI tool right now?" },
     { num: "02", q: "What do you mostly use AI for?" },
@@ -1046,7 +1131,7 @@ function AudiencePollSlide() {
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
           <div style={{ background: "#ffffff", padding: "clamp(.8rem,1.5vw,1.2rem)", borderRadius: "1rem" }}>
             <QRCode
-              value={POLL_URL}
+              value={absUrl}
               size={200}
               bgColor="#ffffff"
               fgColor="#0a0a0f"
@@ -1106,8 +1191,9 @@ function PollResultsSlide() {
 ══════════════════════════════════════════════ */
 
 export const slides: Slide[] = [
-  { section: "intro", component: CoverSlide,          slug: "cover" },
-  { section: "intro", component: ThankYouYCFSlide,       slug: "thank-you-ycf" },
+  { section: "intro", component: CoverSlide,              slug: "cover" },
+  { section: "intro", component: TableOfContentsSlide,    slug: "table-of-contents" },
+  { section: "intro", component: ThankYouYCFSlide,        slug: "thank-you-ycf" },
   { section: "intro", component: WhatIsMakersLoungeSlide, slug: "what-is-makerslounge" },
   { section: "intro", component: AboutSlide,             slug: "about" },
   { section: "intro", component: AudiencePollSlide,   slug: "audience-poll" },
