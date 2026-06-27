@@ -791,6 +791,211 @@ function ShowcaseSlide() {
   )
 }
 
+function HostingSlide() {
+  const options = [
+    {
+      icon: "💻",
+      label: "Local Laptop",
+      color: "dim",
+      badge: "Default",
+      badgeColor: "dim",
+      points: [
+        "Zero extra setup — it's already running",
+        "Gateway sleeps when laptop closes",
+        "Great for development and demos",
+      ],
+      cmd: "openclaw gateway status",
+    },
+    {
+      icon: "🐳",
+      label: "Docker",
+      color: "teal",
+      badge: "Portable",
+      badgeColor: "teal",
+      points: [
+        "One Dockerfile, runs anywhere",
+        "Always-on if the host machine stays up",
+        "Works on any VPS: Hetzner, GCP, Azure…",
+      ],
+      cmd: "docker run openclaw/gateway",
+    },
+    {
+      icon: "🚀",
+      label: "Fly.io",
+      color: "coral",
+      badge: "Recommended Cloud",
+      badgeColor: "coral",
+      points: [
+        "Free tier — great for hackathon projects",
+        "Always-on, globally distributed",
+        "Deploy in one command: fly deploy",
+      ],
+      cmd: "fly launch && fly deploy",
+    },
+  ]
+
+  return (
+    <>
+      <GlowC />
+      <DotGrid />
+      <SectionTag section="intro" />
+      <SlideSec style={{ position: "relative", zIndex: 1 }}>
+        <FI>
+          <Label>Deployment</Label>
+          <Divider />
+          <H2 style={{ marginTop: "1rem", marginBottom: "1.6rem" }}>Run it everywhere.</H2>
+        </FI>
+        <FI>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem" }}>
+            {options.map(opt => {
+              const rgb = opt.color === "teal" ? "0,212,190" : opt.color === "coral" ? "255,74,82" : "107,120,152"
+              return (
+                <div
+                  key={opt.label}
+                  style={{
+                    background: opt.color === "dim" ? "var(--surface)" : `rgba(${rgb},.06)`,
+                    border: `1px solid rgba(${rgb},.25)`,
+                    borderRadius: 12,
+                    padding: "1.2rem 1.3rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: ".6rem",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <span style={{ fontSize: "1.5rem" }}>{opt.icon}</span>
+                    <Pill color={opt.badgeColor as "coral" | "teal" | "dim"}>{opt.badge}</Pill>
+                  </div>
+                  <p style={{ fontSize: ".6rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".14em", color: `var(--${opt.color})` }}>
+                    {opt.label}
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: ".4rem" }}>
+                    {opt.points.map((p, i) => (
+                      <p key={i} style={{ fontSize: "clamp(.75rem,1.15vw,.84rem)", color: "var(--body)", lineHeight: 1.5 }}>
+                        · {p}
+                      </p>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: "auto", paddingTop: ".5rem" }}>
+                    <div style={{ background: "var(--bg)", border: "1px solid var(--rim)", borderRadius: 6, padding: ".45rem .8rem", fontFamily: "var(--font-mono),'SF Mono',ui-monospace,monospace", fontSize: ".72rem", color: `var(--${opt.color})` }}>
+                      $ {opt.cmd}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </FI>
+        <FI>
+          <div style={{ marginTop: "1.1rem" }}>
+            <Divider />
+            <p style={{ marginTop: ".7rem", fontSize: ".82rem", color: "var(--dim)" }}>
+              The Gateway is just a Node process — if it can run Node, it can run OpenClaw. Your channels stay connected regardless of where it lives.
+            </p>
+          </div>
+        </FI>
+      </SlideSec>
+    </>
+  )
+}
+
+function ProvidersSlide() {
+  const cloud = [
+    { name: "Anthropic", model: "claude-opus-4-6", tag: "Best coding" },
+    { name: "OpenAI",    model: "gpt-4o",          tag: "Widely used" },
+    { name: "Google",    model: "gemini-2.5-pro",  tag: "Free tier" },
+    { name: "xAI",       model: "grok-3",          tag: "Fast" },
+  ]
+  const local = [
+    { name: "Ollama",    model: "qwen3:14b",       tag: "Free · private" },
+    { name: "LM Studio", model: "any GGUF",        tag: "GUI + local" },
+    { name: "vLLM",      model: "any HF model",    tag: "GPU server" },
+  ]
+
+  return (
+    <>
+      <GlowT />
+      <DotGrid />
+      <SectionTag section="intro" />
+      <SlideSec style={{ position: "relative", zIndex: 1 }}>
+        <FI>
+          <Label color="teal">Providers</Label>
+          <Divider />
+          <H2 style={{ marginTop: "1rem", marginBottom: "1.6rem" }}>Gateway ≠ the AI.</H2>
+        </FI>
+        <FI>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: "1.5rem", alignItems: "start" }}>
+            {/* Cloud */}
+            <div>
+              <p style={{ fontSize: ".58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".16em", color: "var(--coral)", marginBottom: ".75rem" }}>
+                ☁️ Cloud API — pay per token
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
+                {cloud.map(p => (
+                  <div key={p.name} style={{ background: "var(--surface)", border: "1px solid var(--rim)", borderRadius: 8, padding: ".7rem 1rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div>
+                      <p style={{ fontSize: ".82rem", fontWeight: 700, color: "var(--bright)" }}>{p.name}</p>
+                      <p style={{ fontSize: ".68rem", color: "var(--slate)", fontFamily: "var(--font-mono),'SF Mono',ui-monospace,monospace" }}>{p.model}</p>
+                    </div>
+                    <Pill color="dim">{p.tag}</Pill>
+                  </div>
+                ))}
+              </div>
+              <p style={{ marginTop: ".75rem", fontSize: ".76rem", color: "var(--dim)", lineHeight: 1.55 }}>
+                Best models available. Costs money. Your prompts leave your machine.
+              </p>
+            </div>
+
+            {/* Arrow */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: ".4rem", paddingTop: "3.5rem" }}>
+              <div style={{ background: "rgba(255,74,82,.1)", border: "1px solid var(--coral)", borderRadius: 10, padding: ".8rem 1rem", textAlign: "center" }}>
+                <p style={{ fontSize: "1.2rem" }}>🦞</p>
+                <p style={{ fontSize: ".58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".1em", color: "var(--coral)", marginTop: ".3rem" }}>Gateway</p>
+                <p style={{ fontSize: ".62rem", color: "var(--dim)", marginTop: ".2rem" }}>routes &amp; bridges</p>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: ".15rem" }}>
+                <div style={{ width: 1, height: 18, background: "var(--rim)" }} />
+                <p style={{ fontSize: ".6rem", color: "var(--slate)" }}>swap</p>
+                <p style={{ fontSize: ".6rem", color: "var(--slate)" }}>anytime</p>
+                <div style={{ width: 1, height: 18, background: "var(--rim)" }} />
+              </div>
+            </div>
+
+            {/* Local */}
+            <div>
+              <p style={{ fontSize: ".58rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".16em", color: "var(--teal)", marginBottom: ".75rem" }}>
+                🖥️ Local — free &amp; private
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
+                {local.map(p => (
+                  <div key={p.name} style={{ background: "rgba(0,212,190,.05)", border: "1px solid rgba(0,212,190,.2)", borderRadius: 8, padding: ".7rem 1rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div>
+                      <p style={{ fontSize: ".82rem", fontWeight: 700, color: "var(--bright)" }}>{p.name}</p>
+                      <p style={{ fontSize: ".68rem", color: "var(--slate)", fontFamily: "var(--font-mono),'SF Mono',ui-monospace,monospace" }}>{p.model}</p>
+                    </div>
+                    <Pill color="teal">{p.tag}</Pill>
+                  </div>
+                ))}
+              </div>
+              <p style={{ marginTop: ".75rem", fontSize: ".76rem", color: "var(--teal)", lineHeight: 1.55, fontWeight: 600 }}>
+                Zero cost. Completely private. Perfect for students without API credits.
+              </p>
+            </div>
+          </div>
+        </FI>
+        <FI>
+          <div style={{ marginTop: "1rem" }}>
+            <Divider />
+            <p style={{ marginTop: ".65rem", fontSize: ".8rem", color: "var(--dim)" }}>
+              Model format: <span style={{ fontFamily: "var(--font-mono),'SF Mono',ui-monospace,monospace", color: "var(--bright)" }}>provider/model-id</span> — e.g. <span style={{ fontFamily: "var(--font-mono),'SF Mono',ui-monospace,monospace", color: "var(--teal)" }}>anthropic/claude-opus-4-6</span> or <span style={{ fontFamily: "var(--font-mono),'SF Mono',ui-monospace,monospace", color: "var(--teal)" }}>ollama/qwen3:14b</span>. Change the config, restart, done.
+            </p>
+          </div>
+        </FI>
+      </SlideSec>
+    </>
+  )
+}
+
 function QABreak1() {
   return (
     <>
@@ -1318,6 +1523,8 @@ export const slides: Slide[] = [
   { section: "intro", component: VsSlide,             slug: "vs-chatgpt" },
   { section: "intro", component: InstallSlide,        slug: "install" },
   { section: "intro", component: ShowcaseSlide,       slug: "showcase" },
+  { section: "intro", component: HostingSlide,        slug: "hosting" },
+  { section: "intro", component: ProvidersSlide,      slug: "providers" },
   { section: "intro", component: QABreak1,            slug: "qa-break-1" },
   { section: "demo",  component: DemoIntroSlide,      slug: "demo-intro" },
   { section: "demo",  component: Step1Slide,          slug: "step-1-dashboard" },
