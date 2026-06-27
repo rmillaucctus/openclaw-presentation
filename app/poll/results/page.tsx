@@ -2,6 +2,8 @@
 import { useEffect, useState, useCallback } from "react"
 import { QUESTIONS } from "@/lib/poll-config"
 
+interface Message { id: string; text: string }
+
 interface ResultsPayload {
   count: number
   q1: Record<string, number>
@@ -9,12 +11,14 @@ interface ResultsPayload {
   q3: Record<string, number>
   q4: string[]
   q5: string[]
+  q6: Message[]
 }
 
 export default function ResultsPage() {
   const [data, setData] = useState<ResultsPayload | null>(null)
+  const [deleting, setDeleting] = useState<Set<string>>(new Set())
 
-  const fetch_ = useCallback(async () => {
+  const refresh = useCallback(async () => {
     try {
       const res = await fetch("/api/poll")
       if (res.ok) setData(await res.json())
@@ -22,17 +26,20 @@ export default function ResultsPage() {
   }, [])
 
   useEffect(() => {
-    fetch_()
-    const id = setInterval(fetch_, 5000)
+    refresh()
+    const id = setInterval(refresh, 5000)
     return () => clearInterval(id)
-  }, [fetch_])
+  }, [refresh])
+
+  async function deleteMsg(id: string) {
+    setDeleting(prev => new Set(prev).add(id))
+    await fetch(`/api/poll/${id}`, { method: "DELETE" })
+    await refresh()
+    setDeleting(prev => { const s = new Set(prev); s.delete(id); return s })
+  }
 
   if (!data) {
-    return (
-      <div style={s.page}>
-        <p style={{ color: "var(--slate)", fontSize: ".9rem" }}>Loading…</p>
-      </div>
-    )
+    return <div style={s.page}><p style={{ color: "var(--slate)", fontSize: ".9rem" }}>Loading…</p></div>
   }
 
   return (
@@ -42,7 +49,8 @@ export default function ResultsPage() {
         <span style={s.count}>{data.count} {data.count === 1 ? "response" : "responses"}</span>
       </div>
 
-      <div style={s.grid}>
+      {/* Choice charts */}
+      <div style={s.grid3}>
         {(["q1", "q2", "q3"] as const).map(qid => {
           const q = QUESTIONS.find(q => q.id === qid)!
           const tally = data[qid]
@@ -54,7 +62,6 @@ export default function ResultsPage() {
                 {q.options!.map(opt => {
                   const n = tally[opt.id] ?? 0
                   const pct = Math.round((n / data.count) * 100) || 0
-                  const barW = Math.round((n / max) * 100)
                   return (
                     <div key={opt.id}>
                       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: ".2rem" }}>
@@ -62,7 +69,7 @@ export default function ResultsPage() {
                         <span style={s.optPct}>{n > 0 ? `${pct}%` : "—"}</span>
                       </div>
                       <div style={s.barTrack}>
-                        <div style={{ ...s.barFill, width: `${barW}%` }} />
+                        <div style={{ ...s.barFill, width: `${Math.round((n / max) * 100)}%` }} />
                       </div>
                     </div>
                   )
@@ -73,8 +80,9 @@ export default function ResultsPage() {
         })}
       </div>
 
+      {/* Free-text Q4 + Q5 */}
       {(data.q4.length > 0 || data.q5.length > 0) && (
-        <div style={s.grid}>
+        <div style={s.grid2}>
           {(["q4", "q5"] as const).map(qid => {
             const q = QUESTIONS.find(q => q.id === qid)!
             const answers = data[qid]
@@ -82,8 +90,8 @@ export default function ResultsPage() {
             return (
               <div key={qid} style={s.block}>
                 <p style={s.qTitle}>{q.text}</p>
-                <div style={{ display: "flex", flexDirection: "column", gap: ".4rem", marginTop: ".6rem", maxHeight: 180, overflowY: "auto" }}>
-                  {answers.slice().reverse().map((a, i) => (
+                <div style={{ display: "flex", flexDirection: "column", gap: ".4rem", marginTop: ".6rem", maxHeight: 160, overflowY: "auto" }}>
+                  {[...answers].reverse().map((a, i) => (
                     <p key={i} style={s.answer}>&ldquo;{a}&rdquo;</p>
                   ))}
                 </div>
@@ -93,8 +101,35 @@ export default function ResultsPage() {
         </div>
       )}
 
+      {/* Message wall — Q6 */}
+      {data.q6.length > 0 && (
+        <div style={s.block}>
+          <p style={s.qTitle}>
+            {QUESTIONS.find(q => q.id === "q6")!.text}
+            <span style={{ marginLeft: ".5rem", fontWeight: 400, color: "var(--slate)", fontSize: ".7rem" }}>
+              — click × to remove
+            </span>
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: ".5rem", marginTop: ".8rem" }}>
+            {[...data.q6].reverse().map(msg => (
+              <div key={msg.id} style={s.msgBubble}>
+                <span style={s.msgText}>{msg.text}</span>
+                <button
+                  onClick={() => deleteMsg(msg.id)}
+                  disabled={deleting.has(msg.id)}
+                  title="Remove"
+                  style={s.deleteBtn}
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {data.count === 0 && (
-        <p style={{ color: "var(--slate)", fontSize: ".85rem", textAlign: "center", marginTop: "1rem" }}>
+        <p style={{ color: "var(--slate)", fontSize: ".85rem", textAlign: "center", marginTop: "1.5rem" }}>
           Waiting for responses… share the link or QR code.
         </p>
       )}
@@ -108,12 +143,14 @@ const s: Record<string, React.CSSProperties> = {
     background: "var(--bg)",
     padding: "1.4rem 1.6rem 2rem",
     fontFamily: "var(--font-sans, sans-serif)",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
   },
   header: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: "1.2rem",
     borderBottom: "1px solid var(--rim)",
     paddingBottom: ".8rem",
   },
@@ -130,11 +167,15 @@ const s: Record<string, React.CSSProperties> = {
     color: "var(--dim)",
     letterSpacing: ".04em",
   },
-  grid: {
+  grid3: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+    gap: "1rem",
+  },
+  grid2: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
     gap: "1rem",
-    marginBottom: "1rem",
   },
   block: {
     background: "var(--surface)",
@@ -149,27 +190,10 @@ const s: Record<string, React.CSSProperties> = {
     margin: 0,
     lineHeight: 1.35,
   },
-  optLabel: {
-    fontSize: ".75rem",
-    color: "var(--body)",
-  },
-  optPct: {
-    fontSize: ".72rem",
-    fontWeight: 700,
-    color: "var(--dim)",
-  },
-  barTrack: {
-    height: 6,
-    background: "var(--rim)",
-    borderRadius: 99,
-    overflow: "hidden",
-  },
-  barFill: {
-    height: "100%",
-    background: "var(--coral)",
-    borderRadius: 99,
-    transition: "width .4s ease",
-  },
+  optLabel: { fontSize: ".75rem", color: "var(--body)" },
+  optPct:   { fontSize: ".72rem", fontWeight: 700, color: "var(--dim)" },
+  barTrack: { height: 6, background: "var(--rim)", borderRadius: 99, overflow: "hidden" },
+  barFill:  { height: "100%", background: "var(--coral)", borderRadius: 99, transition: "width .4s ease" },
   answer: {
     fontSize: ".78rem",
     color: "var(--body)",
@@ -178,5 +202,32 @@ const s: Record<string, React.CSSProperties> = {
     padding: ".4rem .65rem",
     margin: 0,
     lineHeight: 1.45,
+  },
+  msgBubble: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: ".4rem",
+    background: "var(--bg)",
+    border: "1px solid var(--rim)",
+    borderRadius: 999,
+    padding: ".35rem .75rem .35rem .9rem",
+    maxWidth: "100%",
+  },
+  msgText: {
+    fontSize: ".82rem",
+    color: "var(--body)",
+    lineHeight: 1.4,
+  },
+  deleteBtn: {
+    flexShrink: 0,
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    color: "var(--slate)",
+    fontSize: "1rem",
+    lineHeight: 1,
+    padding: "0 .1rem",
+    fontFamily: "inherit",
+    transition: "color .1s",
   },
 }

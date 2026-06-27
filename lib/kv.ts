@@ -1,9 +1,10 @@
 import type { Submission } from "./poll-config"
 
-const KEY = "poll:submissions"
+const KEY     = "poll:submissions"
+const DEL_KEY = "poll:deleted"
 
-// In-memory fallback for local dev (not persistent across restarts)
-const mem: string[] = []
+const mem:    string[]  = []
+const memDel: Set<string> = new Set()
 
 function useReal() {
   return !!(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN)
@@ -23,13 +24,33 @@ export async function pushSubmission(sub: Submission): Promise<void> {
   }
 }
 
-export async function allSubmissions(): Promise<Submission[]> {
-  let raw: string[]
+export async function deleteSubmission(id: string): Promise<void> {
   if (useReal()) {
     const redis = await getRedis()
-    raw = (await redis.lrange(KEY, 0, -1)) as string[]
+    await redis.sadd(DEL_KEY, id)
   } else {
-    raw = [...mem]
+    memDel.add(id)
   }
-  return raw.map(r => JSON.parse(r) as Submission)
+}
+
+export async function allSubmissions(): Promise<Submission[]> {
+  let raw: string[]
+  let deleted: Set<string>
+
+  if (useReal()) {
+    const redis = await getRedis()
+    const [rows, dels] = await Promise.all([
+      redis.lrange(KEY, 0, -1) as Promise<string[]>,
+      redis.smembers(DEL_KEY)  as Promise<string[]>,
+    ])
+    raw     = rows
+    deleted = new Set(dels)
+  } else {
+    raw     = [...mem]
+    deleted = memDel
+  }
+
+  return raw
+    .map(r => JSON.parse(r) as Submission)
+    .filter(s => !deleted.has(s.id))
 }

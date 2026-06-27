@@ -7,7 +7,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json()
 
-    // Validate choice questions answered
     for (const q of QUESTIONS.filter(q => q.type === "choice")) {
       if (!body[q.id] || typeof body[q.id] !== "string") {
         return NextResponse.json({ error: `Missing answer for ${q.id}` }, { status: 400 })
@@ -22,6 +21,7 @@ export async function POST(req: Request) {
       q3: String(body.q3 ?? "").slice(0, 40),
       q4: String(body.q4 ?? "").slice(0, 120),
       q5: String(body.q5 ?? "").slice(0, 120),
+      q6: String(body.q6 ?? "").slice(0, 200),
     }
 
     await pushSubmission(sub)
@@ -36,7 +36,6 @@ export async function GET() {
   const subs = await allSubmissions()
   const count = subs.length
 
-  // Aggregate choice questions
   function tally(qid: "q1" | "q2" | "q3") {
     const counts: Record<string, number> = {}
     for (const s of subs) {
@@ -53,5 +52,9 @@ export async function GET() {
     q3: tally("q3"),
     q4: subs.map(s => s.q4).filter(Boolean).slice(0, 30),
     q5: subs.map(s => s.q5).filter(Boolean).slice(0, 30),
+    q6: subs
+      .filter(s => s.q6?.trim())
+      .map(s => ({ id: s.id, text: s.q6 }))
+      .slice(0, 50),
   })
 }

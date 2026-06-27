@@ -38,10 +38,10 @@ export const QUESTIONS: Question[] = [
     text: "Have you ever built something with AI?",
     type: "choice",
     options: [
-      { id: "shipped",      label: "Yes — I've shipped something" },
+      { id: "shipped",       label: "Yes — I've shipped something" },
       { id: "experimenting", label: "I've experimented a bit" },
-      { id: "want_to",      label: "Not yet but I want to!" },
-      { id: "not_yet",      label: "Not really my thing" },
+      { id: "want_to",       label: "Not yet but I want to!" },
+      { id: "not_yet",       label: "Not really my thing" },
     ],
   },
   {
@@ -58,6 +58,13 @@ export const QUESTIONS: Question[] = [
     placeholder: "Go wild.",
     maxLength: 120,
   },
+  {
+    id: "q6",
+    text: "Drop a message for the room — introduce yourself, shout something out, or just say hi 👋",
+    type: "text",
+    placeholder: "Say something…",
+    maxLength: 200,
+  },
 ]
 
 export interface Submission {
@@ -68,4 +75,5 @@ export interface Submission {
   q3: string
   q4: string
   q5: string
+  q6: string
 }
