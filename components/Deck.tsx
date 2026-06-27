@@ -38,13 +38,38 @@ const slideVariants = {
 }
 
 export default function Deck() {
-  const [cur, setCur] = useState(0)
+  const [cur, setCur] = useState(() => {
+    if (typeof window === "undefined") return 0
+    const hash = window.location.hash.replace("#", "")
+    const idx = slides.findIndex(s => s.slug === hash)
+    return idx >= 0 ? idx : 0
+  })
   const [dir, setDir] = useState<"right" | "left">("right")
 
   const go = useCallback((n: number) => {
     if (n < 0 || n >= slides.length || n === cur) return
     setDir(n > cur ? "right" : "left")
     setCur(n)
+    window.location.hash = slides[n].slug
+  }, [cur])
+
+  // Set initial hash on mount
+  useEffect(() => {
+    if (!window.location.hash) window.location.hash = slides[cur].slug
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Sync with browser back/forward
+  useEffect(() => {
+    const onHashChange = () => {
+      const hash = window.location.hash.replace("#", "")
+      const idx = slides.findIndex(s => s.slug === hash)
+      if (idx >= 0 && idx !== cur) {
+        setDir(idx > cur ? "right" : "left")
+        setCur(idx)
+      }
+    }
+    window.addEventListener("hashchange", onHashChange)
+    return () => window.removeEventListener("hashchange", onHashChange)
   }, [cur])
 
   useEffect(() => {
