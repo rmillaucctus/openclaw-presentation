@@ -997,7 +997,8 @@ function OpenQASlide() {
    AUDIENCE POLL SLIDE
 ══════════════════════════════════════════════ */
 
-const POLL_URL = "https://tally.so/r/XXXXXXX" // ← replace with your Tally / Google Form URL
+const POLL_URL = "https://tally.so/r/XXXXXXX"     // ← replace with your Tally / Google Form URL
+const RESULTS_URL = "https://tally.so/r/XXXXXXX"  // ← replace with your Tally results / share URL
 
 function AudiencePollSlide() {
   const questions = [
@@ -1017,7 +1018,7 @@ function AudiencePollSlide() {
           <Divider />
           <H2 style={{ marginTop: ".6rem" }}>Let&apos;s hear<br />from you.</H2>
           <p style={{ marginTop: "1rem", fontSize: "clamp(.88rem,1.4vw,1rem)", color: "var(--body)", lineHeight: 1.7, maxWidth: "40ch" }}>
-            Scan the QR code or visit the link below. Five quick questions — your answers shape how we spend today.
+            Scan the QR code or click the button below. Five quick questions — your answers shape how we spend today.
           </p>
           <div style={{ marginTop: "1.4rem", display: "flex", flexDirection: "column", gap: ".55rem" }}>
             {questions.map((item) => (
@@ -1027,9 +1028,20 @@ function AudiencePollSlide() {
               </div>
             ))}
           </div>
-          <p style={{ marginTop: "1.4rem", fontSize: ".78rem", color: "var(--slate)", letterSpacing: ".04em" }}>
-            {POLL_URL}
-          </p>
+          <a
+            href={POLL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: ".5rem",
+              marginTop: "1.4rem", padding: ".65rem 1.4rem",
+              background: "var(--coral)", color: "#fff",
+              borderRadius: 8, fontWeight: 700, fontSize: ".88rem",
+              textDecoration: "none", letterSpacing: ".02em",
+            }}
+          >
+            Fill out on your laptop →
+          </a>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
           <div style={{ background: "#ffffff", padding: "clamp(.8rem,1.5vw,1.2rem)", borderRadius: "1rem" }}>
@@ -1048,6 +1060,47 @@ function AudiencePollSlide() {
   )
 }
 
+function PollResultsSlide() {
+  return (
+    <>
+      <DotGrid />
+      <SectionTag section="intro" />
+      <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", height: "100%" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.2rem" }}>
+          <div>
+            <Label>Poll results — live</Label>
+            <Divider />
+            <H2 style={{ marginTop: ".5rem" }}>What you said.</H2>
+          </div>
+          <a
+            href={RESULTS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: ".45rem",
+              padding: ".55rem 1.2rem",
+              background: "var(--surface)", border: "1px solid var(--rim)",
+              color: "var(--bright)", borderRadius: 8,
+              fontWeight: 600, fontSize: ".82rem",
+              textDecoration: "none", letterSpacing: ".02em", flexShrink: 0,
+            }}
+          >
+            Open in new tab ↗
+          </a>
+        </div>
+        <div style={{ flex: 1, borderRadius: 12, overflow: "hidden", border: "1px solid var(--rim)", background: "var(--surface)", minHeight: 0 }}>
+          <iframe
+            src={RESULTS_URL}
+            style={{ width: "100%", height: "100%", border: "none", minHeight: "420px" }}
+            title="Poll results"
+            allow="clipboard-write"
+          />
+        </div>
+      </div>
+    </>
+  )
+}
+
 /* ══════════════════════════════════════════════
    SLIDES ARRAY
 ══════════════════════════════════════════════ */
@@ -1058,6 +1111,7 @@ export const slides: Slide[] = [
   { section: "intro", component: WhatIsMakersLoungeSlide, slug: "what-is-makerslounge" },
   { section: "intro", component: AboutSlide,             slug: "about" },
   { section: "intro", component: AudiencePollSlide,   slug: "audience-poll" },
+  { section: "intro", component: PollResultsSlide,    slug: "poll-results" },
   { section: "intro", component: WhyOpenClawSlide,    slug: "why-openclaw" },
   { section: "intro", component: ProblemSlide,        slug: "problem" },
   { section: "intro", component: WhatIsSlide,         slug: "what-is" },
