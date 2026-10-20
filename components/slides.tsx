@@ -440,6 +440,93 @@ function AboutSlide() {
   )
 }
 
+function MyWorkSlide() {
+  const areas = [
+    {
+      icon: "🛠️",
+      title: "Building products",
+      did: "Shipping AI tools — coding, debugging, deploying. Lighten, Daygo, Marble, Marketstep.",
+      help: "Paste an error from my phone, get a fix back. Kick off a build, read the result later.",
+    },
+    {
+      icon: "🎟️",
+      title: "Running MakersLounge",
+      did: "Planning events, coordinating members, writing event blurbs, keeping the community alive.",
+      help: "Draft a Luma post, summarize who's coming, set a cron reminder before every event.",
+    },
+    {
+      icon: "✍️",
+      title: "Content & audience",
+      did: "Posting to 4K on LinkedIn, writing, turning what I build into things worth reading.",
+      help: "Turn a rough thought into a post draft over chat — between meetings, no laptop.",
+    },
+    {
+      icon: "🔬",
+      title: "Research & learning",
+      did: "Tracking new models, tools, and competitors so I'm never building on stale info.",
+      help: "Send a topic, get a structured briefing back with the numbers and sources that matter.",
+    },
+    {
+      icon: "📥",
+      title: "Business & ops",
+      did: "Email, scheduling, partnerships, the admin that eats a founder's day.",
+      help: "Triage and draft replies, propose meeting times, chase the loose ends I'd forget.",
+    },
+    {
+      icon: "🎤",
+      title: "Talks & mentoring",
+      did: "Workshops like this one, helping other builders get unstuck and ship faster.",
+      help: "Spin up demos, prep slides, answer setup questions for people following along.",
+    },
+  ]
+  return (
+    <>
+      <GlowC />
+      <DotGrid />
+      <SectionTag section="intro" />
+      <SlideSec style={{ position: "relative", zIndex: 1 }}>
+        <FI>
+          <Label color="coral">A day in my work</Label>
+          <Divider />
+          <H2 style={{ marginTop: "1rem", marginBottom: ".4rem" }}>Six jobs, one founder.</H2>
+          <p style={{ fontSize: "clamp(.85rem,1.4vw,1rem)", color: "var(--dim)", lineHeight: 1.6, maxWidth: "54ch" }}>
+            Here&apos;s everything on my plate — and the part of each one I now hand to an agent in my chat app.
+          </p>
+        </FI>
+        <FI>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: ".7rem", marginTop: "1.3rem" }}>
+            {areas.map(a => (
+              <div
+                key={a.title}
+                className="card-hover"
+                style={{
+                  background: "var(--surface)",
+                  border: "1px solid var(--rim)",
+                  borderRadius: 12,
+                  padding: "1rem 1.1rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: ".5rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: ".55rem" }}>
+                  <span style={{ fontSize: "1.25rem" }}>{a.icon}</span>
+                  <p style={{ fontSize: ".92rem", fontWeight: 700, color: "var(--bright)", lineHeight: 1.15 }}>{a.title}</p>
+                </div>
+                <p style={{ fontSize: ".76rem", color: "var(--dim)", lineHeight: 1.5 }}>{a.did}</p>
+                <Divider />
+                <p style={{ fontSize: ".76rem", color: "var(--teal)", lineHeight: 1.5, fontWeight: 600 }}>
+                  🦞 {a.help}
+                </p>
+              </div>
+            ))}
+          </div>
+        </FI>
+      </SlideSec>
+    </>
+  )
+}
+
 function WhyOpenClawSlide() {
   const [active, setActive] = useState(0)
 
@@ -1515,6 +1602,7 @@ export const slides: Slide[] = [
   { section: "intro", component: ThankYouYCFSlide,        slug: "thank-you-ycf" },
   { section: "intro", component: WhatIsMakersLoungeSlide, slug: "what-is-makerslounge" },
   { section: "intro", component: AboutSlide,             slug: "about" },
+  { section: "intro", component: MyWorkSlide,            slug: "my-work" },
   { section: "intro", component: AudiencePollSlide,   slug: "audience-poll" },
   { section: "intro", component: PollResultsSlide,    slug: "poll-results" },
   { section: "intro", component: WhyOpenClawSlide,    slug: "why-openclaw" },
